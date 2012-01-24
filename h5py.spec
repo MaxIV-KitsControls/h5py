@@ -1,20 +1,21 @@
 %{?filter_provides_in: %filter_provides_in .*/h5py/.*\.so}
 %{?filter_setup}
 
+# TODO: py3 support + enable tests
+
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
-Version:        1.3.1
-Release:        5%{?dist}
+Version:        2.0.1
+Release:        1%{?dist}
 Group:          Applications/Engineering
 License:        BSD
 URL:            http://h5py.alfven.org/
 Source0:        http://h5py.googlecode.com/files/h5py-%{version}.tar.gz
 # patch to use a system liblzf rather than bundled liblzf
-Patch0:         h5py-1.3.1-system-lzf.patch
-BuildRequires:  python-devel
-BuildRequires:  python-nose
+Patch0:         h5py-2.0.1-system-lzf.patch
+BuildRequires:  python-devel >= 2.6
 BuildRequires:  python-sphinx
-BuildRequires:  hdf5-devel >= 1.8.2
+BuildRequires:  hdf5-devel >= 1.8.3
 BuildRequires:  numpy >= 1.0.3
 BuildRequires:  liblzf-devel
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -38,14 +39,8 @@ simplifies the process of reading and writing data from Python.
 rm -rf lzf/lzf
 
 %build
-export CC="%{__cc}"
 export CFLAGS="%{optflags} -fopenmp -llzf"
-%{__python} setup.py configure --hdf5=%{_libdir} --api=18
 %{__python} setup.py build
-# build docs 
-dir=$(basename build/lib.linux-*)
-PYTHONPATH=$(pwd)/build/$dir make -C docs html
-rm -f docs/build/html/.buildinfo
 
 %install
 rm -rf %{buildroot}
@@ -53,19 +48,23 @@ rm -rf %{buildroot}
 chmod 0755 %{buildroot}%{python_sitearch}/%{name}/*.so
 
 %check
-%{__python} setup.py nosetests
+#{__python} setup.py test
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-, root, root, -)
-%doc README.txt LICENSE.txt h5py.egg-info licenses 
-%doc docs/build/html
+%doc ANN.txt README.txt
 %{python_sitearch}/%{name}/
-%{python_sitearch}/%{name}-%{version}-*.egg-info/
+%{python_sitearch}/%{name}-%{version}-*.egg-info
 
 %changelog
+* Tue Jan 24 2012 Terje Rosten <terje.rosten@ntnu.no> - 2.0.1-1
+- 2.0.1
+- docs is removed
+- rebase patch
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
