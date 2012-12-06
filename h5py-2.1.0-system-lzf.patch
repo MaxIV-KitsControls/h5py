@@ -12,26 +12,27 @@ index c6dd4b0..08579a7 100644
  
  /* Our own versions of H5Epush_sim, as it changed in 1.8 */
 diff --git a/setup.py b/setup.py
-index dc6d6ac..dddb95e 100644
+index c939133..4ffc6fe 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -57,7 +57,7 @@ if sys.platform.startswith('win'):
          COMPILER_SETTINGS['library_dirs'] += [op.join(HDF5, 'dll')]
  else:
      COMPILER_SETTINGS = {
--       'libraries'      : ['hdf5'],
-+       'libraries'      : ['hdf5', 'lzf'],
+-       'libraries'      : ['hdf5', 'hdf5_hl'],
++       'libraries'      : ['hdf5', 'hdf5_hl', 'lzf'],
         'include_dirs'   : [numpy.get_include(), localpath('lzf')],
         'library_dirs'   : [],
         'define_macros'  : [('H5_USE_16_API', None)]
-@@ -77,9 +77,7 @@ MODULES =  ['defs','_errors','_objects','_proxy', 'h5fd', 'h5z',
-             'h5d', 'h5a', 'h5f', 'h5g',
-             'h5l', 'h5o']
+@@ -78,9 +78,8 @@ MODULES =  ['defs','_errors','_objects','_proxy', 'h5fd', 'h5z',
+             'h5l', 'h5o',
+             'h5ds']
  
--EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c"), 
+-EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c"),
 -                      localpath("lzf/lzf/lzf_c.c"),
 -                      localpath("lzf/lzf/lzf_d.c")]}
 +EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c")]}
++
  
  def make_extension(module):
      sources = [op.join('h5py', module+SUFFIX)] + EXTRA_SRC.get(module, [])
