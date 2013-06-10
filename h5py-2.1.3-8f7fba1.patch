@@ -1,0 +1,35 @@
+commit 8f7fba15146bb87bc1313fa5d5375669d5fefe16
+Author: Bradley M. Froehle <brad.froehle@gmail.com>
+Date:   Fri Apr 12 12:23:06 2013 -0700
+
+    Remove unnecessary import.  (Fixes Python 3.3 reference problem.)
+    
+    The import sys line is unnecessary because we have already imported
+    it at the global scope earlier in the file. This prevents a very
+    strange reference leak which I do not quite understand. The leak
+    manifests itself in Python 3.3 as a failing test (test_attrs_data.py:
+    TestTypes.test_complex).
+    
+    The bug was tracked down by turning on `gc.set_debug(gc.DEBUG_LEAK)`
+    and noticing an entry in `gc.garbage`::
+    
+       ImportError("No module named 'h5py.sys'",)
+    
+    Certainly this should not have caused an import error, so it is
+    potentially a bug in Cython. More investigation will be required.
+    
+    Closes #275.
+
+diff --git a/h5py/h5t.pyx b/h5py/h5t.pyx
+index b798995..ef89ceb 100644
+--- a/h5py/h5t.pyx
++++ b/h5py/h5t.pyx
+@@ -997,8 +997,6 @@ cdef class TypeCompoundID(TypeCompositeID):
+         field_types = []
+         nfields = self.get_nmembers()
+ 
+-        import sys
+-
+         # First step: read field names and their Numpy dtypes into 
+         # two separate arrays.
+         for i from 0 <= i < nfields:

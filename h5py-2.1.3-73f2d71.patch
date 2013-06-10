@@ -1,0 +1,97 @@
+commit 73f2d713591c16cd6c735668154fc0acd83865aa
+Author: Matthew Turk <matthewturk@gmail.com>
+Date:   Thu Mar 14 18:10:37 2013 -0400
+
+    Addressing #251 by switching to absolute imports in .pyx files.
+
+diff --git a/h5py/h5a.pyx b/h5py/h5a.pyx
+index 0d6ba34..c7a690e 100644
+--- a/h5py/h5a.pyx
++++ b/h5py/h5a.pyx
+@@ -23,7 +23,7 @@ from numpy cimport import_array, ndarray, PyArray_DATA
+ from utils cimport check_numpy_read, check_numpy_write, emalloc, efree
+ from _proxy cimport attr_rw
+ 
+-import _objects
++from h5py import _objects
+ 
+ # Initialization
+ import_array()
+diff --git a/h5py/h5d.pyx b/h5py/h5d.pyx
+index 63c6506..00521e1 100644
+--- a/h5py/h5d.pyx
++++ b/h5py/h5d.pyx
+@@ -24,7 +24,7 @@ from h5s cimport SpaceID
+ from h5p cimport PropID, propwrap
+ from _proxy cimport dset_rw
+ 
+-import _objects
++from h5py import _objects
+ 
+ # Initialization
+ import_array()
+diff --git a/h5py/h5f.pyx b/h5py/h5f.pyx
+index 9532cce..8d6caf7 100644
+--- a/h5py/h5f.pyx
++++ b/h5py/h5f.pyx
+@@ -21,7 +21,7 @@ from h5t cimport typewrap
+ from h5i cimport wrap_identifier
+ from utils cimport emalloc, efree
+ 
+-import _objects
++from h5py import _objects
+ 
+ # Initialization
+ 
+diff --git a/h5py/h5g.pyx b/h5py/h5g.pyx
+index ae9e9f5..74548ad 100644
+--- a/h5py/h5g.pyx
++++ b/h5py/h5g.pyx
+@@ -21,7 +21,7 @@ from h5p cimport PropID
+ cimport _hdf5 # to implement container testing for 1.6
+ from _errors cimport set_error_handler, err_cookie
+ 
+-import _objects
++from h5py import _objects
+ 
+ # === Public constants and data structures ====================================
+ 
+diff --git a/h5py/h5p.pyx b/h5py/h5p.pyx
+index 4f41a41..2a09aa7 100644
+--- a/h5py/h5p.pyx
++++ b/h5py/h5p.pyx
+@@ -21,7 +21,7 @@ from utils cimport  require_tuple, convert_dims, convert_tuple, \
+ from numpy cimport ndarray, import_array
+ from h5t cimport TypeID, py_create
+ 
+-import _objects
++from h5py import _objects
+ 
+ # Initialization
+ import_array()
+diff --git a/h5py/h5s.pyx b/h5py/h5s.pyx
+index 38c9086..dd9974a 100644
+--- a/h5py/h5s.pyx
++++ b/h5py/h5s.pyx
+@@ -19,7 +19,7 @@ from utils cimport  require_tuple, convert_dims, convert_tuple, \
+                     emalloc, efree, create_numpy_hsize, create_hsize_array
+ from numpy cimport ndarray
+ 
+-import _objects
++from h5py import _objects
+ 
+ 
+ cdef object lockid(hid_t id_):
+diff --git a/h5py/h5t.pyx b/h5py/h5t.pyx
+index 81d6144..b798995 100644
+--- a/h5py/h5t.pyx
++++ b/h5py/h5t.pyx
+@@ -26,7 +26,7 @@ from h5r cimport Reference, RegionReference
+ 
+ from utils cimport  emalloc, efree, \
+                     require_tuple, convert_dims, convert_tuple
+-import _conv
++from h5py import _conv
+ 
+ # Runtime imports
+ import sys
