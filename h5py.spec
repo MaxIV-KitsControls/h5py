@@ -5,16 +5,14 @@
 
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
-Version:        2.1.3
-Release:        2%{?dist}
+Version:        2.2.0
+Release:        1%{?dist}
 Group:          Applications/Engineering
 License:        BSD
 URL:            http://h5py.alfven.org/
 Source0:        http://h5py.googlecode.com/files/h5py-%{version}.tar.gz
 # patch to use a system liblzf rather than bundled liblzf
-Patch0:         h5py-2.1.0-system-lzf.patch
-Patch1:         h5py-2.1.3-73f2d71.patch
-Patch2:         h5py-2.1.3-8f7fba1.patch
+Patch0:         h5py-2.2.0-system-lzf.patch
 BuildRequires:  liblzf-devel
 BuildRequires:  hdf5-devel >= 1.8.3
 BuildRequires:  python-devel >= 2.6
@@ -66,11 +64,7 @@ This is the Python 3 version of h5py.
 # use system libzlf and remove private copy
 %patch0 -p1
 rm -rf lzf/lzf
-%patch1 -p1
-%patch2 -p1
-pushd h5py
 %{__python} api_gen.py
-popd
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -110,19 +104,22 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-, root, root, -)
-%doc ANN.txt README.txt examples
+%doc licenses/*.txt ANN.rst README.rst examples
 %{python_sitearch}/%{name}/
 %{python_sitearch}/%{name}-%{version}-*.egg-info
 
 %if 0%{?with_python3}
 %files -n python3-h5py
 %defattr(-, root, root, -)
-%doc ANN.txt README.txt
+%doc licenses/*.txt ANN.rst README.rst
 %{python3_sitearch}/%{name}/
 %{python3_sitearch}/%{name}-%{version}-*.egg-info
 %endif
 
 %changelog
+* Thu Sep 26 2013 Terje Rosten <terje.rosten@ntnu.no> - 2.2.0-1
+- 2.2.0
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
