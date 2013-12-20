@@ -5,7 +5,7 @@
 
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
-Version:        2.2.0
+Version:        2.2.1
 Release:        1%{?dist}
 Group:          Applications/Engineering
 License:        BSD
@@ -117,6 +117,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Dec 19 2013 Orion Poplawski <orion@cora.nwra.com> - 2.2.1-1
+- 2.2.1
+
 * Thu Sep 26 2013 Terje Rosten <terje.rosten@ntnu.no> - 2.2.0-1
 - 2.2.0
 
@@ -166,5 +169,5 @@ rm -rf %{buildroot}
 - run tests
 - new url
 
-* Sat Jul  3 2009 Joseph Smidt <josephsmidt@gmail.com> - 1.2.0-1
+* Sat Jul  4 2009 Joseph Smidt <josephsmidt@gmail.com> - 1.2.0-1
 - initial RPM release
