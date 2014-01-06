@@ -6,7 +6,7 @@
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
 Version:        2.2.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Group:          Applications/Engineering
 License:        BSD
 URL:            http://h5py.alfven.org/
@@ -117,6 +117,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sun Jan 5 2014 Orion Poplawski <orion@cora.nwra.com> - 2.2.1-2
+- Rebuild for hdf5 1.8.12
+
 * Thu Dec 19 2013 Orion Poplawski <orion@cora.nwra.com> - 2.2.1-1
 - 2.2.1
 
