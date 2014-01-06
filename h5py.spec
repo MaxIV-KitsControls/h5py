@@ -26,6 +26,7 @@ BuildRequires:  python3-sphinx
 BuildRequires:  python3-numpy >= 1.0.3
 BuildRequires:  python3-Cython
 %endif
+Requires:       hdf5 = %{_hdf5_version}
 Requires:       numpy >= 1.0.3
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -119,6 +120,7 @@ rm -rf %{buildroot}
 %changelog
 * Sun Jan 5 2014 Orion Poplawski <orion@cora.nwra.com> - 2.2.1-2
 - Rebuild for hdf5 1.8.12
+- Add requires for hdf5 version
 
 * Thu Dec 19 2013 Orion Poplawski <orion@cora.nwra.com> - 2.2.1-1
 - 2.2.1
