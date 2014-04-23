@@ -5,14 +5,14 @@
 
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
-Version:        2.2.1
-Release:        2%{?dist}
+Version:        2.3.0
+Release:        1%{?dist}
 Group:          Applications/Engineering
 License:        BSD
-URL:            http://h5py.alfven.org/
-Source0:        http://h5py.googlecode.com/files/h5py-%{version}.tar.gz
+URL:            http://www.h5py.org/
+Source0:        https://pypi.python.org/packages/source/h/h5py/h5py-%{version}.tar.gz
 # patch to use a system liblzf rather than bundled liblzf
-Patch0:         h5py-2.2.0-system-lzf.patch
+Patch0:         h5py-system-lzf.patch
 BuildRequires:  liblzf-devel
 BuildRequires:  hdf5-devel >= 1.8.3
 BuildRequires:  python-devel >= 2.6
@@ -63,7 +63,7 @@ This is the Python 3 version of h5py.
 %prep
 %setup -q
 # use system libzlf and remove private copy
-%patch0 -p1
+%patch0 -p1 -b .lzf
 rm -rf lzf/lzf
 %{__python} api_gen.py
 %if 0%{?with_python3}
@@ -72,7 +72,7 @@ cp -a . %{py3dir}
 %endif
 
 %build
-export CFLAGS="%{optflags} -fopenmp -llzf"
+export CFLAGS="%{optflags} -fopenmp"
 %{__python} setup.py build
 
 %if 0%{?with_python3}
@@ -118,6 +118,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Apr 22 2014 Orion Poplawski <orion@cora.nwra.com> - 2.3.0-1
+- Update to 2.3.0
+
 * Sun Jan 5 2014 Orion Poplawski <orion@cora.nwra.com> - 2.2.1-2
 - Rebuild for hdf5 1.8.12
 - Add requires for hdf5 version
