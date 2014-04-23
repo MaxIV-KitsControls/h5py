@@ -104,14 +104,12 @@ popd
 rm -rf %{buildroot}
 
 %files
-%defattr(-, root, root, -)
 %doc licenses/*.txt ANN.rst README.rst examples
 %{python_sitearch}/%{name}/
 %{python_sitearch}/%{name}-%{version}-*.egg-info
 
 %if 0%{?with_python3}
 %files -n python3-h5py
-%defattr(-, root, root, -)
 %doc licenses/*.txt ANN.rst README.rst
 %{python3_sitearch}/%{name}/
 %{python3_sitearch}/%{name}-%{version}-*.egg-info
