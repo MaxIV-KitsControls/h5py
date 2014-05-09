@@ -28,7 +28,6 @@ BuildRequires:  python3-Cython
 %endif
 Requires:       hdf5 = %{_hdf5_version}
 Requires:       numpy >= 1.0.3
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 The h5py package provides both a high- and low-level interface to the
@@ -82,7 +81,6 @@ popd
 %endif
 
 %install
-rm -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 chmod 0755 %{buildroot}%{python_sitearch}/%{name}/*.so
 
@@ -99,9 +97,6 @@ pushd %{py3dir}
 %{__python3} setup.py test || :
 popd
 %endif
-
-%clean
-rm -rf %{buildroot}
 
 %files
 %doc licenses/*.txt ANN.rst README.rst examples
