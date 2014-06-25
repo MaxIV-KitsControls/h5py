@@ -5,8 +5,8 @@
 
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
-Version:        2.3.0
-Release:        4%{?dist}
+Version:        2.3.1
+Release:        1%{?dist}
 Group:          Applications/Engineering
 License:        BSD
 URL:            http://www.h5py.org/
@@ -111,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 25 2014 Orion Poplawski <orion@cora.nwra.com> - 2.3.1-1
+- Update to 2.3.1
+
 * Tue Jun 10 2014 Orion Poplawski <orion@cora.nwra.com> - 2.3.0-4
 - Rebuild for hdf 1.8.13
 
