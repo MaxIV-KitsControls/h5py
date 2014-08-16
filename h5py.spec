@@ -6,7 +6,7 @@
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
 Version:        2.3.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Group:          Applications/Engineering
 License:        BSD
 URL:            http://www.h5py.org/
@@ -111,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Wed Jun 25 2014 Orion Poplawski <orion@cora.nwra.com> - 2.3.1-1
 - Update to 2.3.1
 
