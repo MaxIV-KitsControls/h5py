@@ -1,6 +1,6 @@
-diff -up h5py-2.3.0/lzf/lzf_filter.c.lzf h5py-2.3.0/lzf/lzf_filter.c
---- h5py-2.3.0/lzf/lzf_filter.c.lzf	2014-04-22 07:00:04.000000000 -0600
-+++ h5py-2.3.0/lzf/lzf_filter.c	2014-04-22 21:14:07.109003123 -0600
+diff -up h5py-2.4.0/lzf/lzf_filter.c.lzf h5py-2.4.0/lzf/lzf_filter.c
+--- h5py-2.4.0/lzf/lzf_filter.c.lzf	2014-12-17 12:05:28.000000000 -0700
++++ h5py-2.4.0/lzf/lzf_filter.c	2015-01-07 11:46:08.880778180 -0700
 @@ -26,7 +26,7 @@
  #include <stdio.h>
  #include <errno.h>
@@ -10,27 +10,37 @@ diff -up h5py-2.3.0/lzf/lzf_filter.c.lzf h5py-2.3.0/lzf/lzf_filter.c
  #include "lzf_filter.h"
  
  /* Our own versions of H5Epush_sim, as it changed in 1.8 */
-diff -up h5py-2.3.0/setup.py.lzf h5py-2.3.0/setup.py
---- h5py-2.3.0/setup.py.lzf	2014-04-22 07:00:04.000000000 -0600
-+++ h5py-2.3.0/setup.py	2014-04-22 21:14:25.104369896 -0600
-@@ -146,7 +146,7 @@ if sys.platform.startswith('win'):
-             shutil.copy(op.join(HDF5, 'bin', f), localpath('h5py', f))
+diff -up h5py-2.4.0/setup_build.py.lzf h5py-2.4.0/setup_build.py
+--- h5py-2.4.0/setup_build.py.lzf	2014-12-17 12:05:28.000000000 -0700
++++ h5py-2.4.0/setup_build.py	2015-01-07 11:52:18.209258734 -0700
+@@ -30,9 +30,7 @@ MODULES =  ['defs','_errors','_objects',
+             'h5ds', 'h5ac']
+ 
+ 
+-EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c"),
+-              localpath("lzf/lzf/lzf_c.c"),
+-              localpath("lzf/lzf/lzf_d.c")]} 
++EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c")]} 
+ 
+ 
+ if sys.platform.startswith('win'):
+@@ -44,7 +42,7 @@ if sys.platform.startswith('win'):
+         
  else:
      COMPILER_SETTINGS = {
 -       'libraries'      : ['hdf5', 'hdf5_hl'],
 +       'libraries'      : ['hdf5', 'hdf5_hl', 'lzf'],
-        'include_dirs'   : [localpath('lzf')],
-        'library_dirs'   : [],
-        'define_macros'  : [('H5_USE_16_API', None)]
-@@ -193,9 +193,8 @@ if HAVE_CYTHON:
- else:
-     configure.printerr("Cython not present; building for HDF5 1.8.4+")
+        'include_dirs'   : [localpath('lzf'), '/opt/local/include', '/usr/local/include'],
+        'library_dirs'   : ['/opt/local/lib', '/usr/local/lib'],
+        'define_macros'  : [('H5_USE_16_API', None)] }
+@@ -82,10 +80,6 @@ class h5py_build_ext(build_ext):
+             settings['include_dirs'].insert(0, op.join(config.hdf5, 'include'))
+             settings['library_dirs'].insert(0, op.join(config.hdf5, 'lib'))
  
--EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c"),
--                      localpath("lzf/lzf/lzf_c.c"),
--                      localpath("lzf/lzf/lzf_d.c")]}
-+EXTRA_SRC = {'h5z': [ localpath("lzf/lzf_filter.c")]}
-+
- 
- def make_extension(module):
-     sources = [op.join('h5py', module+SUFFIX)] + EXTRA_SRC.get(module, [])
+-        # TODO: should this only be done on UNIX?
+-        if os.name != 'nt':
+-            settings['runtime_library_dirs'] = settings['library_dirs']
+-        
+         def make_extension(module):
+             sources = [localpath('h5py', module+'.pyx')] + EXTRA_SRC.get(module, [])
+             return Extension('h5py.'+module, sources, **settings)
