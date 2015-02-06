@@ -1,4 +1,4 @@
-%global with_python3 1
+%global with_python3 0
 
 %{?filter_provides_in: %filter_provides_in .*/h5py/.*\.so}
 %{?filter_setup}
