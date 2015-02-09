@@ -18,7 +18,8 @@ BuildRequires:  hdf5-devel >= 1.8.3
 BuildRequires:  python-devel >= 2.6
 BuildRequires:  python-sphinx
 BuildRequires:  numpy >= 1.0.3
-BuildRequires:  Cython
+BuildRequires:  Cython >= 0.17
+BuildRequires:  python-setuptools >= 0.6
 %if 0%{?with_python3}
 BuildRequires:  python-tools
 BuildRequires:  python3-devel >= 3.2
